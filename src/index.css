@@ -1,0 +1,145 @@
+/* ============================================================
+ * 全局样式（index.css）· Tailwind CSS v4 · VERDANT 浅色高级主题
+ * ------------------------------------------------------------
+ * 参考视频开头 VERDANT 品牌页：浅色白底 + 墨绿点缀 + 极简导航
+ * + 眉标 + 超大标题 + 副文案 + 双按钮。克制的淡绿光晕、轻阴影。
+ * ============================================================ */
+@import "tailwindcss";
+
+/* ---------- 设计令牌 ---------- */
+@theme {
+  --color-paper:  #f6f8f4;      /* 页面底色：米白带绿调 */
+  --color-ink:    #0e1d16;      /* 主文字：近黑墨绿 */
+  --color-slate-soft: #5b6b62;  /* 次级文字 */
+  --color-mute:   #8a9990;      /* 弱文字 */
+  --color-accent: #2e7d5b;      /* 墨绿主强调（VERDANT 绿） */
+  --color-leaf:   #3f9c74;      /* 翠绿次强调 */
+  --color-amber:  #c08a4e;      /* 暖赭金：B 同学 / 点缀 */
+
+  --shadow-soft:  0 1px 2px rgba(23,58,43,.05), 0 8px 24px rgba(23,58,43,.07);
+  --shadow-lift:  0 2px 4px rgba(23,58,43,.06), 0 18px 40px rgba(23,58,43,.12);
+}
+
+/* ---------- 基础 ---------- */
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: "Noto Sans SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 尊重"减少动效"系统偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* ---------- 白色卡片（细边框 + 轻阴影） ---------- */
+.glass {
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid #e3eae5;
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow .3s ease, border-color .3s ease, transform .3s ease;
+}
+.glass:hover {
+  box-shadow: var(--shadow-lift);
+  border-color: rgba(46,125,91,.35);
+}
+
+/* ---------- 噪点纹理（极淡，增加质感） ---------- */
+.noise::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .7;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* ---------- 淡绿光晕背景（VERDANT 式柔光） ---------- */
+.gradient-mesh {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(54rem 42rem at 6% -8%, rgba(46,125,91,.13), transparent 60%),
+    radial-gradient(48rem 38rem at 96% 12%, rgba(63,156,116,.10), transparent 58%),
+    radial-gradient(56rem 48rem at 55% 108%, rgba(192,138,78,.08), transparent 62%),
+    linear-gradient(180deg, #fbfcf9 0%, var(--color-paper) 60%);
+}
+
+/* ---------- 内容层在背景之上 ---------- */
+main, header, footer, section { position: relative; z-index: 1; }
+
+/* ---------- 自定义滚动条 ---------- */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: rgba(46,125,91,.22); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- 数字 / 公式用等宽字体 ---------- */
+.font-mono { font-family: "JetBrains Mono", "Cascadia Code", monospace; }
+
+/* ---------- 超大字标题（VERDANT hero 排版） ---------- */
+.hero-title {
+  font-size: clamp(30px, 5.2vw, 58px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #0e1d16;
+}
+.hero-title .grad {
+  background: linear-gradient(92deg, #2e7d5b 0%, #3f9c74 55%, #c08a4e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- 3D 旋转绿色圆环（仿视频开头的 VERDANT 绿环） ----------
+ * 用 CSS 3D 变换实现，不依赖 WebGL，任何浏览器都稳定显示：
+ *  - ring-3d：整组绕 X 轴倾斜（俯视轨道感）+ 绕 Z 轴自转
+ *  - 内外两环以不同速度反向旋转，产生立体轨道效果
+ */
+.ring-3d {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  transform-style: preserve-3d;
+  transform: rotateX(62deg);
+  animation: ring-orbit 18s linear infinite;
+}
+.ring-3d svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.ring-3d .ring-outer {
+  animation: ring-spin-cw 9s linear infinite;
+}
+.ring-3d .ring-inner {
+  animation: ring-spin-ccw 6s linear infinite;
+}
+.ring-3d .ring-core {
+  animation: ring-breathe 3.2s ease-in-out infinite;
+}
+@keyframes ring-orbit {
+  from { transform: rotateX(62deg) rotateZ(0deg); }
+  to   { transform: rotateX(62deg) rotateZ(360deg); }
+}
+@keyframes ring-spin-cw {
+  from { transform: rotateZ(0deg); }
+  to   { transform: rotateZ(360deg); }
+}
+@keyframes ring-spin-ccw {
+  from { transform: rotateZ(360deg); }
+  to   { transform: rotateZ(0deg); }
+}
+@keyframes ring-breathe {
+  0%, 100% { transform: scale(1); opacity: .30; }
+  50%      { transform: scale(1.12); opacity: .45; }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "campus-set-live",
+  "version": "2.0.0",
+  "description": "校园集合实验室 · 现代产品版：React + Tailwind + Motion + Three.js 前端，Express + JSON 后端，可部署到免费托管平台",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "start": "node server.js",
+    "preview": "vite preview"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@react-three/drei": "^9.114.3",
+    "@react-three/fiber": "^8.17.10",
+    "@tailwindcss/vite": "^4.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "framer-motion": "^11.15.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.0.0",
+    "three": "^0.169.0",
+    "vite": "^5.4.11"
+  }
+}

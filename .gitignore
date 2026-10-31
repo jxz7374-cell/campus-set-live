@@ -1,0 +1,10 @@
+# 依赖（npm install 后生成，不用上传）
+node_modules/
+
+# 运行时临时文件
+npm-debug.log*
+
+# 说明：data/students.json 是种子数据，随代码一起上传；
+# 部署后服务器会把新增学生写回这个文件。
+# 免费平台（Render/Railway）重启后文件系统会还原成仓库里的版本，
+# 如需永久保存数据，见 README 里的"数据持久化"一节。
